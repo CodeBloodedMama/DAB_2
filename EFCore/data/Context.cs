@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.data
 {
-    public class Context : ContextBase
+    public class Context : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
