@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EFCore.data
 {
-    internal class Context
+    public class Context
     {
     }
+    
 }
