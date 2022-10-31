@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.Model
+namespace FacilityDbManager.Model
 {
     public class User
     {
@@ -13,7 +13,6 @@ namespace EFCore.Model
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
         public int CVR { get; set; }
-
         public int PhoneNumber { get; set; }
         
 

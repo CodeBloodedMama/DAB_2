@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.Model
+namespace FacilityDbManager.Model
 {
     public class Reservation
     {

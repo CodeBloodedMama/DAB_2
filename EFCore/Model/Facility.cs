@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFCore.Model
+namespace FacilityDbManager.Model
 {
     public class Facility
     {
@@ -18,6 +18,7 @@ namespace EFCore.Model
         public string Fac_Rules { get; set; } = null!;
 
         public string Fac_Items { get; set; } = null!;
+        
 
 
     }
