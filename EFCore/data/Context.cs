@@ -22,7 +22,6 @@ namespace FacilityDbManager.data
 
 
         //Connectionstring has to be dockerized.
-        //
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FacilityDbManager;Trusted_Connection=True;");
