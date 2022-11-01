@@ -9,7 +9,7 @@ namespace FacilityDbManager.Model
 {
     public class Reservation
     {
-        public int ResId { get; set; }
+        public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int UserId { get; set; }
@@ -17,7 +17,8 @@ namespace FacilityDbManager.Model
         public User User { get; set; } = null!;
         public Facility Facility { get; set; } = null!;
 
-        //Navigationproperty
-        public ICollection<Reservation> Reservations { get; set; } = null!;
+        public ICollection<ReservationDetails> ReservationDetails { get; set; } = null!;
+        
+
     }
 }

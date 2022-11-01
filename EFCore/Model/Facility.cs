@@ -8,7 +8,11 @@ namespace FacilityDbManager.Model
 {
     public class Facility
     {
-        public int Fac_Id { get; set; }
+
+        // Entity Framework requires a primary key that is automatically generated within 
+        // the database. The [Key] attribute is used to identify the primary key.
+        // Id is the primary key
+        public int Id { get; set; }
         public string Fac_Name { get; set; } = null!;
 
         public string Fac_ClosestAdr { get; set; } = null!;
@@ -19,8 +23,7 @@ namespace FacilityDbManager.Model
 
         public string Fac_Items { get; set; } = null!;
 
-        //Navigationproperty
-        public ICollection<Facility> facility { get; set; } = null!;
+       
         
 
 

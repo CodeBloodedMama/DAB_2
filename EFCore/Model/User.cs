@@ -8,16 +8,15 @@ namespace FacilityDbManager.Model
 {
     public class User
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
         public int CVR { get; set; }
         public int PhoneNumber { get; set; }
-        
-        // Navigationproberty
-        public ICollection<User> user { get; set; } = null!;
-        
+
+        //Navigationproperty that creates a one to many relationship in the database
+        public ICollection<Reservation> reservation { get; set; } = null!;
 
 
     }
