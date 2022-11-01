@@ -18,7 +18,13 @@ namespace FacilityDbManager.Model
         public string Fac_Rules { get; set; } = null!;
 
         public string Fac_Items { get; set; } = null!;
+
+        //Navigationproperty
+        public ICollection<Facility> facility { get; set; } = null!;
         
+
+
+
 
 
     }

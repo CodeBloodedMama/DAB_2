@@ -15,6 +15,10 @@ namespace FacilityDbManager.Model
         public int CVR { get; set; }
         public int PhoneNumber { get; set; }
         
+        // Navigationproberty
+        public ICollection<User> user { get; set; } = null!;
+        
+
 
     }
 }

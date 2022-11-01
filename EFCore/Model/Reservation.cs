@@ -16,5 +16,8 @@ namespace FacilityDbManager.Model
         public int Fac_Id { get; }
         public User User { get; set; } = null!;
         public Facility Facility { get; set; } = null!;
+
+        //Navigationproperty
+        public ICollection<Reservation> Reservations { get; set; } = null!;
     }
 }
