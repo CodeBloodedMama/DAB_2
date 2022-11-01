@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace FacilityDbManager.Model
 {
     public class Facility
     {
-
+        [Key]
         // Entity Framework requires a primary key that is automatically generated within 
         // the database. The [Key] attribute is used to identify the primary key.
         // Id is the primary key
