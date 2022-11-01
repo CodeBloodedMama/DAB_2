@@ -13,13 +13,9 @@ namespace FacilityDbManager.Model
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
  
+        // virtual creates a one to one or one to zero relation
         public virtual User User { get; set; } = null!;
         public virtual Facility Facility { get; set; } = null!;
-
-
-
-
-
 
     }
 }
