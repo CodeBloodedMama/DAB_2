@@ -21,7 +21,7 @@ namespace FacilityDbManager.data
         public DbSet<User> Users { get; set; } = null!;
 
 
-        //Connectionstring has to be dockerized.
+        //Connectionstring has to be dockerized. RN its InMemory not recommended for EFCore
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextInMemory)
         {
 
