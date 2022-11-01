@@ -26,7 +26,7 @@ namespace FacilityDbManager.data
         {
 
             //.UseInMemoryDatabase(databaseName)
-            DbContextOptionsBuilder.UseInMemory("Server=db;Database=master;User=sa;Password=Your_password123;");
+            DbContextOptionsBuilder.UseInMemoryDatabase("Server=db;Database=master;User=sa;Password=Your_password123;");
         }
       
     }
