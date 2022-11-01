@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FacilityDbManager.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class MigrationAddCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,12 +34,18 @@ namespace FacilityDbManager.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CVR = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false)
+                    CVR = table.Column<int>(type: "int", nullable: true),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: true),
+                    FacilityId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Facilities_FacilityId",
+                        column: x => x.FacilityId,
+                        principalTable: "Facilities",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -70,66 +76,6 @@ namespace FacilityDbManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ReservationDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ReservationId = table.Column<int>(type: "int", nullable: false),
-                    Fac_Id = table.Column<int>(type: "int", nullable: false),
-                    FacilityId = table.Column<int>(type: "int", nullable: false),
-                    Fac_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_ClosestAdr = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_Rules = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_Items = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CVR = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReservationDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ReservationDetails_Facilities_FacilityId",
-                        column: x => x.FacilityId,
-                        principalTable: "Facilities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReservationDetails_Reservations_ReservationId",
-                        column: x => x.ReservationId,
-                        principalTable: "Reservations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReservationDetails_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservationDetails_FacilityId",
-                table: "ReservationDetails",
-                column: "FacilityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservationDetails_ReservationId",
-                table: "ReservationDetails",
-                column: "ReservationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservationDetails_UserId",
-                table: "ReservationDetails",
-                column: "UserId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_FacilityId",
                 table: "Reservations",
@@ -139,21 +85,23 @@ namespace FacilityDbManager.Migrations
                 name: "IX_Reservations_UserId",
                 table: "Reservations",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_FacilityId",
+                table: "Users",
+                column: "FacilityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ReservationDetails");
-
-            migrationBuilder.DropTable(
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "Facilities");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Facilities");
         }
     }
 }

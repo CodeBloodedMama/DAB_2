@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FacilityDbManager.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221101120156_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221101130554_MigrationAddCreate")]
+    partial class MigrationAddCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,77 +86,6 @@ namespace FacilityDbManager.Migrations
                     b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("FacilityDbManager.Model.ReservationDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CVR")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("End")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Fac_ClosestAdr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Fac_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Fac_Items")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fac_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fac_Rules")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Fac_Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FacilityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Start")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacilityId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ReservationDetails");
-                });
-
             modelBuilder.Entity("FacilityDbManager.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -165,21 +94,26 @@ namespace FacilityDbManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CVR")
+                    b.Property<int?>("CVR")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("FacilityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<int?>("PhoneNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FacilityId");
 
                     b.ToTable("Users");
                 });
@@ -187,13 +121,13 @@ namespace FacilityDbManager.Migrations
             modelBuilder.Entity("FacilityDbManager.Model.Reservation", b =>
                 {
                     b.HasOne("FacilityDbManager.Model.Facility", "Facility")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FacilityDbManager.Model.User", "User")
-                        .WithMany("reservation")
+                        .WithMany("Reservation")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -201,43 +135,25 @@ namespace FacilityDbManager.Migrations
                     b.Navigation("Facility");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FacilityDbManager.Model.ReservationDetails", b =>
-                {
-                    b.HasOne("FacilityDbManager.Model.Facility", "Facility")
-                        .WithMany()
-                        .HasForeignKey("FacilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FacilityDbManager.Model.Reservation", "Reservation")
-                        .WithMany("ReservationDetails")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FacilityDbManager.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Facility");
-
-                    b.Navigation("Reservation");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FacilityDbManager.Model.Reservation", b =>
-                {
-                    b.Navigation("ReservationDetails");
                 });
 
             modelBuilder.Entity("FacilityDbManager.Model.User", b =>
                 {
-                    b.Navigation("reservation");
+                    b.HasOne("FacilityDbManager.Model.Facility", null)
+                        .WithMany("User")
+                        .HasForeignKey("FacilityId");
+                });
+
+            modelBuilder.Entity("FacilityDbManager.Model.Facility", b =>
+                {
+                    b.Navigation("Reservations");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("FacilityDbManager.Model.User", b =>
+                {
+                    b.Navigation("Reservation");
                 });
 #pragma warning restore 612, 618
         }

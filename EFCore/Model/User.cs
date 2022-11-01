@@ -12,11 +12,11 @@ namespace FacilityDbManager.Model
 
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public int CVR { get; set; }
-        public int PhoneNumber { get; set; }
+        public int? CVR { get; set; }
+        public int? PhoneNumber { get; set; }
 
         //Navigationproperty that creates a one to many relationship in the database
-        public ICollection<Reservation> reservation { get; set; } = null!;
+        public ICollection<Reservation> Reservation { get; set; } = null!;
 
 
     }

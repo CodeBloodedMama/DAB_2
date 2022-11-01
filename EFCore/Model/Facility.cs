@@ -23,8 +23,11 @@ namespace FacilityDbManager.Model
 
         public string Fac_Items { get; set; } = null!;
 
-       
-        
+        public virtual ICollection<Reservation> Reservations { get; set; } = null!;
+
+        public virtual ICollection<User> User { get; set; } = null!;
+
+
 
 
 

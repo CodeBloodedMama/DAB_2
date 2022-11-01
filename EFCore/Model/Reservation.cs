@@ -12,13 +12,14 @@ namespace FacilityDbManager.Model
         public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public int UserId { get; set; }
-        public int Fac_Id { get; }
-        public User User { get; set; } = null!;
-        public Facility Facility { get; set; } = null!;
+ 
+        public virtual User User { get; set; } = null!;
+        public virtual Facility Facility { get; set; } = null!;
 
-        public ICollection<ReservationDetails> ReservationDetails { get; set; } = null!;
-        
+
+
+
+
 
     }
 }
