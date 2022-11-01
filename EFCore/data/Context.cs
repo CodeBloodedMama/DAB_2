@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FacilityDbManager.Model;
-
 using Microsoft.EntityFrameworkCore;
 
 
 namespace FacilityDbManager.data
 {
     public class Context : DbContext
+        
     {
         //Each DbTabel will be matched to its database
         public DbSet<Facility> Facilities { get; set; } = null!;
@@ -22,10 +22,13 @@ namespace FacilityDbManager.data
 
 
         //Connectionstring has to be dockerized.
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder dbContextInMemory)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=FacilityDbManager;Trusted_Connection=True;");
+
+            //.UseInMemoryDatabase(databaseName)
+            DbContextOptionsBuilder.UseInMemory("Server=db;Database=master;User=sa;Password=Your_password123;");
         }
+      
     }
     
 }

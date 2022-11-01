@@ -12,7 +12,6 @@ namespace FacilityDbManager.Model
         [Key]
         // Entity Framework requires a primary key that is automatically generated within 
         // the database. The [Key] attribute is used to identify the primary key.
-        // Id is the primary key
         public int Id { get; set; }
         public string Fac_Name { get; set; } = null!;
 
