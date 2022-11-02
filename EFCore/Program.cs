@@ -4,6 +4,8 @@ using EFCore;
 using EFCore.data;
 using EFCore.Model;
 
+
+
 App app = new();
 return(app.Run());
 
