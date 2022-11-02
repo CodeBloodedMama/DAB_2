@@ -8,7 +8,7 @@ namespace EFCore.Model
 {
     public class Facility
     {
-        public int Fac_Id { get; set; }
+        public int Id { get; set; }
         public string Fac_Name { get; set; } = null!;
 
         public string Fac_ClosestAdr { get; set; } = null!;
