@@ -19,7 +19,7 @@ public class App
     {
         _context = new Context();
         _facilityController = new FacilityController(_context);
-        _commandCtrl = new CommandCtrl(_ui, _facilityController);
+        _commandCtrl = new CommandCtrl(_ui, _facilityController, _context);
     }
 
     public int Run()
@@ -82,12 +82,21 @@ public class App
                 OnGetAll();
                 break;
             }
+            case "get ordered":
+            {
+                OnGetOrdered();
+                break;
+            }
             default:
                 _ui.Display("Unrecognized command\n");
                 break;
         }
     }
 
+    private void OnGetOrdered()
+    {
+        _commandCtrl.GetFacilitiesOrderByKind();
+    }
 
     private void OnAdd()
     {
@@ -143,4 +152,34 @@ public class App
         }
         _ui.Display(formatted);
     }
+
+    /*
+    public void SetDummyData()
+    {
+        Facility f = new Facility()
+        {
+            FacClosestAdr = "SomeAddress",
+            FacType = "MyFavType",
+            FacName = "NotMyhome",
+            FacRules = "..."
+            // Etc
+        };
+        _facilityController.Add(f);
+        User u = new User()
+        {
+            CVR = 1234,
+            Email = "my@email.com",
+            Name = "UserName",
+            // Etc
+        };
+        _userController.Add(u);
+        
+        Reservation r = new Reservation()
+        {
+            User = _context.Entry(u).Entity,
+
+        }
+        
+
+    }*/
 }

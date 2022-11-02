@@ -40,6 +40,14 @@ public class FacilityController : IController<Facility>
 
     public bool Delete(long id)
     {
-        throw new NotImplementedException();
+        var f = _context.Facilities.Find((int)id);
+        if (f != null)
+        {
+            _context.Facilities.Remove(f);
+            _context.SaveChanges();
+            return true;
+        }
+
+        return false;
     }
 }
