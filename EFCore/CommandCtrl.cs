@@ -23,4 +23,15 @@ public class CommandCtrl
         _ui.Display("Command succesful\n");
     }
 
+    public void UserListFacilities()
+    {
+        List<Facility> facilities = _facilityController.GetAll();
+        foreach (Facility f in facilities)
+        {
+            _ui.Display(f.Fac_Name + " " + f.Fac_ClosestAdr + "\n");
+        }
+    }
+
+  
+
 }

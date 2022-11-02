@@ -8,7 +8,7 @@ namespace EFCore.Model
 {
     public class User
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = default!;
 
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
