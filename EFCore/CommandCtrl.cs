@@ -105,6 +105,20 @@ public class CommandCtrl
         _ui.Display(formatted);
     }
 
+    private bool ContextContainsData()
+    {
+        var f = _context.Facilities.FirstOrDefault();
+        var r = _context.Reservations.FirstOrDefault();
+        var u = _context.Users.FirstOrDefault();
+        if (f != null || r != null || u != null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    // Useful for testing
     public void DeleteAllData()
     {
         var f = _facilityController.GetAll();
