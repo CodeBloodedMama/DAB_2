@@ -12,9 +12,15 @@ namespace EFCore.Model
         public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
+<<<<<<< Updated upstream
         public int UserId { get; set; }
         public int FaciltyId { get; set; }
         public User User { get; set; } = null!;
         public Facility Facility { get; set; } = null!;
+=======
+        public User User { get; set; }
+        public Facility Facility { get; set; }
+
+>>>>>>> Stashed changes
     }
 }

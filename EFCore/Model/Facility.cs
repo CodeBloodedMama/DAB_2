@@ -9,16 +9,14 @@ namespace EFCore.Model
     public class Facility
     {
         public int Id { get; set; }
-        public string Fac_Name { get; set; } = null!;
+        public string FacName { get; set; } = null!;
 
-        public string Fac_ClosestAdr { get; set; } = null!;
+        public string FacClosestAdr { get; set; } = null!;
 
-        public string? Fac_Type { get; set; } = null!;
+        public string? FacType { get; set; } = null!;
 
-        public string? Fac_Rules { get; set; } = null!;
+        public string? FacRules { get; set; } = null!;
 
-        public string? Fac_Items { get; set; } = null!;
-
-
+        public string? FacItems { get; set; } = null!;
     }
 }

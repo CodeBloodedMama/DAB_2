@@ -1,33 +1,34 @@
 ﻿using EFCore.data;
 using EFCore.Model;
 
+
 namespace EFCore.Controllers;
 
-public class FacilityController : IController<Facility>
+public class ReservationController : IController<Reservation>
 {
     private readonly Context _context;
 
-    public FacilityController(Context context)
+    public ReservationController(Context context)
     {
         _context = context;
     }
 
-    public Facility? Get(long id)
+    public Reservation Get(long id)
     {
         throw new NotImplementedException();
     }
 
-    public List<Facility> GetAll()
+    public List<Reservation> GetAll()
     {
-        List<Facility> facilities = _context.Facilities.ToList();
-        return facilities;
+        List<Reservation> reservations = _context.Reservations.ToList();
+        return reservations;
     }
 
-    public bool Add(Facility facility)
+    public bool Add(Reservation reservation)
     {
         try
         {
-            _context.Facilities.Add(facility);
+            _context.Reservations.Add(reservation);
             _context.SaveChanges();
         }
         catch (Exception e)
