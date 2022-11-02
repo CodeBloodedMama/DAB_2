@@ -36,10 +36,10 @@ namespace EFCore.UI
             Console.Write(text);
         }
 
-        public string GetTable()
+        public string? GetTable()
         {
             Display("Enter table name: \n");
-            string table = Console.ReadLine();
+            string? table = Console.ReadLine();
             return table;
         }
 

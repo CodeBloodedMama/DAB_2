@@ -120,7 +120,7 @@ public class CommandCtrl
         }
         foreach (var user in u)
         {
-            _userController.Delete(user.Id);
+            _userController.Delete(user.CPRNumber);
         }
     }
 }
