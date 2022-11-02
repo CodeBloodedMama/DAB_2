@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace EFCore.Model
 {
-    internal class User
+    public class User
     {
+        public int UserId { get; set; }
+
+        public string Name { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public int CVR { get; set; }
+
+        public int PhoneNumber { get; set; }
+        
+
     }
 }
