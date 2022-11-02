@@ -14,9 +14,12 @@ namespace EFCore.data
         public DbSet<Facility> Facilities { get; set; } = default!;
         public DbSet<Reservation> Reservations { get; set; } = default!;
         public DbSet<User> Users { get; set; } = default!;
+
+        private const string MarcinConnString =
+            "Data Source=127.0.0.1,1433;Database=FacilitiesDb;User Id=sa;Password=MyDumbPass1;TrustServerCertificate=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=127.0.0.1,1433;Database=FacilitiesDb;User Id=sa;Password=MyDumbPass1;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer(MarcinConnString);
             //optionsBuilder.UseInMemoryDatabase("FacilityDatabase");
         }
     }

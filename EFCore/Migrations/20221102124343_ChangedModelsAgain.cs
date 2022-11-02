@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFCore.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class ChangedModelsAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,7 +51,6 @@ namespace EFCore.Migrations
                     Start = table.Column<DateTime>(type: "datetime2", nullable: false),
                     End = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    FaciltyId = table.Column<int>(type: "int", nullable: false),
                     FacilityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
