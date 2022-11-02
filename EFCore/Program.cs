@@ -1,2 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+using EFCore;
+using EFCore.data;
+using EFCore.Model;
+
+AppController app = new();
+return(app.Run());
+

@@ -9,7 +9,7 @@ namespace EFCore.Model
 {
     public class Reservation
     {
-        public int ResId { get; set; }
+        public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int UserId { get; set; }
