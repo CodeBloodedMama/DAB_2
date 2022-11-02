@@ -20,11 +20,14 @@ namespace EFCore.UI
         public void DisplayHelp()
         {
             Display("Available commands: \n");
+            Display("[get f] : display all facility names and addresses\n");
+            Display("[get f ordered] : display facilities ordered by type\n");
+            Display("[get reservations] : display all reservations with facility name, user name and timeslot");
             Display("[q, quit] : quit application\n");
+            Display("\nAdditional commands:\n");
             Display("[s, show] : show database tables\n");
             Display("[a, add] : add entry to the database\n");
             Display("[g, get] : get an entry from the database\n");
-            Display("[get all] : get all entries of a specific table\n");
             Display("[h, help] : show this message\n");
         }
 

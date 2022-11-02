@@ -22,6 +22,8 @@ namespace EFCore.data
             optionsBuilder.UseSqlServer(MarcinConnString);
             //optionsBuilder.UseInMemoryDatabase("FacilityDatabase");
         }
+
+        
     }
     
 }

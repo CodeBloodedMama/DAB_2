@@ -10,13 +10,17 @@ public class CommandCtrl
 {
     private Ui _ui;
     private FacilityController _facilityController;
+    private ReservationController _reservationController;
+    private UserController _userController;
     private Context _context;
 
-    public CommandCtrl(Ui ui, FacilityController fctrl, Context context)
+    public CommandCtrl(Ui ui)
     {
         _ui = ui;
-        _facilityController = fctrl;
-        _context = context;
+        _context = new Context();
+        _facilityController = new FacilityController(_context);
+        _reservationController = new ReservationController(_context);
+        _userController = new UserController(_context);
     }
     public void UserEnterFacility()
     {
@@ -27,6 +31,25 @@ public class CommandCtrl
         _ui.Display("Command succesful\n");
     }
 
+
+    public void GetAllFacilitiesWAddress()
+    {
+        var facilities = _context.Facilities.ToList();
+        string formatted = "";
+        foreach (Facility f in facilities)
+        {
+            string line = "";
+            line += "Name: " + f.FacName;
+            while (line.Length < 40)
+            {
+                line += ' ';
+            }
+
+            line += "C. Address: " + f.FacClosestAdr;
+            formatted += line + "\n";
+        }
+        _ui.Display(formatted);
+    }
     public void GetReservations()
     {
         List<Reservation> reservations = _context.Reservations.ToList();
@@ -82,5 +105,22 @@ public class CommandCtrl
         _ui.Display(formatted);
     }
 
-    
+    public void DeleteAllData()
+    {
+        var f = _facilityController.GetAll();
+        var r = _reservationController.GetAll();
+        var u = _userController.GetAll();
+        foreach (var facility in f)
+        {
+            _facilityController.Delete(facility.Id);
+        }
+        foreach (var reservation in r)
+        {
+            _reservationController.Delete(reservation.Id);
+        }
+        foreach (var user in u)
+        {
+            _userController.Delete(user.Id);
+        }
+    }
 }

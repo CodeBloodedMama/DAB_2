@@ -41,6 +41,14 @@ public class ReservationController : IController<Reservation>
 
     public bool Delete(long id)
     {
-        throw new NotImplementedException();
+        var r = _context.Reservations.Find((int)id);
+        if (r != null)
+        {
+            _context.Reservations.Remove(r);
+            _context.SaveChanges();
+            return true;
+        }
+
+        return false;
     }
 }

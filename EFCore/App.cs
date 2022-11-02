@@ -10,16 +10,12 @@ namespace EFCore;
 public class App
 {
     private Ui _ui = new();
-    private Context _context;
-    private FacilityController _facilityController;
-    private CommandCtrl _commandCtrl;
+    private readonly CommandCtrl _commandCtrl;
     private bool _running = false;
 
     public App()
     {
-        _context = new Context();
-        _facilityController = new FacilityController(_context);
-        _commandCtrl = new CommandCtrl(_ui, _facilityController, _context);
+        _commandCtrl = new CommandCtrl(_ui);
     }
 
     public int Run()
@@ -37,7 +33,7 @@ public class App
             catch (Exception e)
             {
                 _ui.Display(e.Message + "\n");
-            }
+            }   
         }
 
         return 0;
@@ -77,20 +73,35 @@ public class App
             {
                 throw new NotImplementedException();
             }
-            case "get all":
+            case "get f":
             {
-                OnGetAll();
+                OnGetFacilities();
                 break;
             }
-            case "get ordered":
+            case "get f ordered":
             {
                 OnGetOrdered();
+                break;
+            }
+            case "get reservations":
+            {
+                OnGetReservations();
+                break;
+            }
+            case "reset database":
+            {
+                OnReset();
                 break;
             }
             default:
                 _ui.Display("Unrecognized command\n");
                 break;
         }
+    }
+
+    private void OnReset()
+    {
+        _commandCtrl.DeleteAllData();
     }
 
     private void OnGetOrdered()
@@ -115,71 +126,15 @@ public class App
                 break;
         }
     }
-    private void OnGetAll()
+
+    private void OnGetFacilities()
     {
-        string table = _ui.GetTable();
-        switch (table)
-        {
-            case "f":
-            case "Facility":
-            case "facility":
-            {
-                DisplayFacilities();
-                break;
-            }
-            default:
-                _ui.Display("No such table exists!\n");
-                break;
-        }
+        _commandCtrl.GetAllFacilitiesWAddress();
     }
 
-
-    private void DisplayFacilities()
+    private void OnGetReservations()
     {
-        var facilities = _facilityController.GetAll();
-        string formatted = "";
-        foreach (Facility f in facilities)
-        {
-            string line = "";
-            line += "Name: " + f.FacName;
-            while (line.Length < 40)
-            {
-                line += ' ';
-            }
-
-            line += "C. Address: " + f.FacClosestAdr;
-            formatted += line + "\n";
-        }
-        _ui.Display(formatted);
+        _commandCtrl.GetReservations();
     }
-
-    /*
-    public void SetDummyData()
-    {
-        Facility f = new Facility()
-        {
-            FacClosestAdr = "SomeAddress",
-            FacType = "MyFavType",
-            FacName = "NotMyhome",
-            FacRules = "..."
-            // Etc
-        };
-        _facilityController.Add(f);
-        User u = new User()
-        {
-            CVR = 1234,
-            Email = "my@email.com",
-            Name = "UserName",
-            // Etc
-        };
-        _userController.Add(u);
-        
-        Reservation r = new Reservation()
-        {
-            User = _context.Entry(u).Entity,
-
-        }
-        
-
-    }*/
+    
 }
