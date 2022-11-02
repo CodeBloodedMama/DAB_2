@@ -13,7 +13,7 @@ namespace EFCore.Model
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public int UserId { get; set; }
-        public int Fac_Id { get; }
+        public int FaciltyId { get; set; }
         public User User { get; set; } = null!;
         public Facility Facility { get; set; } = null!;
     }

@@ -13,11 +13,11 @@ namespace EFCore.Model
 
         public string Fac_ClosestAdr { get; set; } = null!;
 
-        public string Fac_Type { get; set; } = null!;
+        public string? Fac_Type { get; set; } = null!;
 
-        public string Fac_Rules { get; set; } = null!;
+        public string? Fac_Rules { get; set; } = null!;
 
-        public string Fac_Items { get; set; } = null!;
+        public string? Fac_Items { get; set; } = null!;
 
 
     }
