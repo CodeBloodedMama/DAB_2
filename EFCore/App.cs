@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using EFCore.data;
-using EFCore.DbController;
+using EFCore.Controllers;
 using EFCore.Model;
 using EFCore.UI;
 using Microsoft.EntityFrameworkCore;
@@ -132,13 +132,13 @@ public class App
         foreach (Facility f in facilities)
         {
             string line = "";
-            line += "Name: " + f.Fac_Name;
+            line += "Name: " + f.FacName;
             while (line.Length < 40)
             {
                 line += ' ';
             }
 
-            line += "C. Address: " + f.Fac_ClosestAdr;
+            line += "C. Address: " + f.FacClosestAdr;
             formatted += line + "\n";
         }
         _ui.Display(formatted);

@@ -15,11 +15,11 @@ namespace EFCore.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Fac_Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_ClosestAdr = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Fac_Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fac_Rules = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fac_Items = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FacName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacClosestAdr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FacType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FacRules = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FacItems = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

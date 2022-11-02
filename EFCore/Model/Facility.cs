@@ -18,5 +18,6 @@ namespace EFCore.Model
         public string? FacRules { get; set; } = null!;
 
         public string? FacItems { get; set; } = null!;
+        public List<Reservation> Reservations { get; set; } = new();
     }
 }

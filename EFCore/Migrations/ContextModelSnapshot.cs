@@ -30,21 +30,21 @@ namespace EFCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Fac_ClosestAdr")
+                    b.Property<string>("FacClosestAdr")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fac_Items")
+                    b.Property<string>("FacItems")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fac_Name")
+                    b.Property<string>("FacName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fac_Rules")
+                    b.Property<string>("FacRules")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fac_Type")
+                    b.Property<string>("FacType")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -64,9 +64,6 @@ namespace EFCore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FacilityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FaciltyId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Start")
@@ -114,13 +111,13 @@ namespace EFCore.Migrations
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
                 {
                     b.HasOne("EFCore.Model.Facility", "Facility")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EFCore.Model.User", "User")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -128,6 +125,16 @@ namespace EFCore.Migrations
                     b.Navigation("Facility");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EFCore.Model.Facility", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("EFCore.Model.User", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

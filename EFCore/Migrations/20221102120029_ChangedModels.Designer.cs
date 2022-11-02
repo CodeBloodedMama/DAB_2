@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221102113629_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221102120029_ChangedModels")]
+    partial class ChangedModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,9 +68,6 @@ namespace EFCore.Migrations
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FaciltyId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
@@ -116,13 +113,13 @@ namespace EFCore.Migrations
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
                 {
                     b.HasOne("EFCore.Model.Facility", "Facility")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("FacilityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EFCore.Model.User", "User")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -130,6 +127,16 @@ namespace EFCore.Migrations
                     b.Navigation("Facility");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EFCore.Model.Facility", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("EFCore.Model.User", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }
