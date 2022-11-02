@@ -11,7 +11,7 @@ namespace EFCore.Model
     {
         [Key]
         [Required]
-        public int CPRNumber { get; set; }
+        public long CPRNumber { get; set; }
 
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
