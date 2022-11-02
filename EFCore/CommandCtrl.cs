@@ -32,6 +32,11 @@ public class CommandCtrl
         }
     }
 
-  
+   //public void UserMakesReservation()
+   // {
+   //     List<Reservation> reservation = _reservationController.GetAll();
+        
 
-}
+
+
+   // }
