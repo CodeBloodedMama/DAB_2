@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EFCore.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace EFCore.data
 {
@@ -15,8 +16,8 @@ namespace EFCore.data
         public DbSet<User> Users { get; set; } = default!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFCore;Trusted_Connection=True;");
-            optionsBuilder.UseInMemoryDatabase("FacilityDatabase");
+            optionsBuilder.UseSqlServer("Data Source=127.0.0.1,1433;Database=FacilitiesDb;User Id=sa;Password=MyDumbPass1;TrustServerCertificate=True");
+            //optionsBuilder.UseInMemoryDatabase("FacilityDatabase");
         }
     }
     
