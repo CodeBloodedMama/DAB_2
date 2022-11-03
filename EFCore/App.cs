@@ -57,17 +57,7 @@ public class App
                 _running = false;
                 break;
             }
-            case "a":
-            case "add":
-            {
-                OnAdd();
-                break;
-            }
-            case "g":
-            case "get":
-            {
-                throw new NotImplementedException();
-            }
+           
             case "s":
             case "show":
             {
@@ -108,25 +98,7 @@ public class App
     {
         _commandCtrl.GetFacilitiesOrderByKind();
     }
-
-    private void OnAdd()
-    {
-        string table = _ui.GetTable();
-        switch (table)
-        {
-            case "f":
-            case "Facility":
-            case "facility":
-            {
-                _commandCtrl.UserEnterFacility();
-                break;
-            }
-            default:
-                _ui.Display("No such table exists!\n");
-                break;
-        }
-    }
-
+    
     private void OnGetFacilities()
     {
         _commandCtrl.GetAllFacilitiesWAddress();

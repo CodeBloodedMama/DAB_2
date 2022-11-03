@@ -8,5 +8,5 @@ public class Participant
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public long CPRNumber { get; set; }
-    public Reservation Reservation { get; set; }
+    public List<Reservation> Reservation { get; set; }
 }

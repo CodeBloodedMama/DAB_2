@@ -27,16 +27,7 @@ public class CommandCtrl
             SeedDummyData();
         }
     }
-    public void UserEnterFacility()
-    {
-        Facility f = new Facility();
-        f.FacName = _ui.GetLine("Enter name:");
-        f.FacClosestAdr = _ui.GetLine("Enter address:");
-        _facilityController.Add(f);
-        _ui.Display("Command succesful\n");
-    }
-
-
+    
     public void GetAllFacilitiesWAddress()
     {
         var facilities = _context.Facilities.ToList();
@@ -50,7 +41,8 @@ public class CommandCtrl
                 line += ' ';
             }
 
-            line += "C. Address: " + f.FacClosestAdr;
+            line += "Lat: " + f.GPS_lat;
+            line += "Lon: " + f.GPS_lon;
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -104,7 +96,8 @@ public class CommandCtrl
             { 
                 line += ' ';
             }
-            line += "C. Address: " + f.FacClosestAdr;
+            line += "Lat: " + f.GPS_lat;
+            line += "Lon: " + f.GPS_lon;
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -146,7 +139,8 @@ public class CommandCtrl
     {
         Facility f1 = new Facility()
         {
-            FacClosestAdr = "Hans Hansen Street 22",
+            GPS_lat = 20.01,
+            GPS_lon = 50.31,
             FacType = "Playground",
             FacItems = "Bench",
             FacName = "The fun playground",
@@ -155,7 +149,8 @@ public class CommandCtrl
 
         Facility f2 = new Facility()
         {
-            FacClosestAdr = "Jens Jensen Street 33",
+            GPS_lat = 50.01,
+            GPS_lon = 121.3123,
             FacType = "Shelter",
             FacItems = "Fire pit",
             FacName = "Shelter by Aarhus",
@@ -163,7 +158,8 @@ public class CommandCtrl
         };
         Facility f3 = new Facility()
         {
-            FacClosestAdr = "Main Street 44",
+            GPS_lat = 42.02,
+            GPS_lon = 55.451,
             FacType = "Playground",
             FacItems = "Toilets",
             FacName = "The playground at Main Street",
@@ -171,7 +167,8 @@ public class CommandCtrl
         };
         Facility f4 = new Facility()
         {
-            FacClosestAdr = "Jens Juuls Street 55",
+            GPS_lat = 68.0131,
+            GPS_lon = 13.2314,
             FacType = "Tennis court",
             FacItems = "Balls",
             FacName = "The land of tennis",
@@ -223,20 +220,24 @@ public class CommandCtrl
                 new Participant(){CPRNumber = 1941491231}
             }
         };
-        
 
+        var p1 = _context.Participants.Find((long)1941491231);
+        var par = new List<Participant>()
+        {
+            new Participant() { CPRNumber = 2020200222 },
+            new Participant() { CPRNumber = 3004894242 }
+        };
+        if (p1 != null)
+        {
+            par.Add(p1);
+        }
         Reservation r2 = new Reservation()
         {
             Start = new DateTime(2022, 4, 5, 10, 30, 00),
             End = new DateTime(2022, 4, 5, 12, 15, 00),
             User = u3,
             Facility = f4,
-            Participants = new List<Participant>()
-            {
-                new Participant(){CPRNumber = 1941491231},
-                new Participant(){CPRNumber = 2020200222},
-                new Participant(){CPRNumber = 3004894242}
-            }
+            Participants = par
         };
         _reservationController.Add(r1);
         _reservationController.Add(r2);

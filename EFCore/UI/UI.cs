@@ -26,8 +26,6 @@ namespace EFCore.UI
             Display("[q, quit] : quit application\n");
             Display("\nAdditional commands:\n");
             Display("[s, show] : show database tables\n");
-            Display("[a, add] : add entry to the database\n");
-            Display("[g, get] : get an entry from the database\n");
             Display("[h, help] : show this message\n");
         }
 

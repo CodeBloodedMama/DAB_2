@@ -1,5 +1,8 @@
-﻿using EFCore.data;
+﻿using System.Linq.Expressions;
+using EFCore.data;
 using EFCore.Model;
+using GeoCoordinatePortable;
+
 
 namespace EFCore.Controllers;
 
@@ -25,6 +28,15 @@ public class FacilityController : IController<Facility>
 
     public bool Add(Facility facility)
     {
+        try
+        {
+            GeoCoordinate check = new GeoCoordinate(facility.GPS_lat, facility.GPS_lon);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
         try
         {
             _context.Facilities.Add(facility);
