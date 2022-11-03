@@ -240,7 +240,24 @@ public class CommandCtrl
             BusinessCVR = 12345678,
             Name = "MaCDonalds",
         };
-
+        
+        BusinessUser b1 = new BusinessUser()
+        {
+            CPRNumber = 1234567890,
+            Email = "Jysk@jysk.dk",
+            PhoneNumber = 12345678,
+            CVR = 12345678,
+            Name = "Jysk Sengetøjslager",
+        };
+        BusinessUser b2 = new BusinessUser()
+        {
+            CPRNumber = 98765432,
+            Email = "McD@mcd.dk",
+            PhoneNumber = 12345678,
+            CVR = 12345678,
+            Name = "MaCDonalds",
+        };
+        
         BusinessUser b3 = new BusinessUser()
         {
             CPRNumber = 75645279,
