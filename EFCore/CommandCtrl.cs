@@ -154,10 +154,23 @@ public class CommandCtrl
         var f = _facilityController.GetAll();
         var r = _reservationController.GetAll();
         var u = _userController.GetAll();
+        var m = _context.MaintenanceInterventions.ToList();
+        var p = _context.Participants.ToList();
         foreach (var facility in f)
         {
             _facilityController.Delete(facility.Id);
         }
+
+        foreach (var par in p)
+        {
+            _context.Participants.Remove(par);
+        }
+        _context.SaveChanges();
+        foreach (var maint in m)
+        {
+            _context.MaintenanceInterventions.Remove(maint);
+        }
+        _context.SaveChanges();
         foreach (var reservation in r)
         {
             _reservationController.Delete(reservation.Id);
@@ -240,40 +253,35 @@ public class CommandCtrl
         _userController.Add(u2);
         _userController.Add(u3);
 
-        
-
         Reservation r1 = new Reservation()
         {
             Start = new DateTime(2022, 2, 7, 12, 00, 00),
             End = new DateTime(2022, 2, 7, 14, 00, 00),
             User = u1,
             Facility = f1,
-            Participants = new List<Participant>()
-            {
-                new Participant(){CPRNumber = 1941491231}
-            }
         };
-
-        var p1 = _context.Participants.Find((long)1941491231);
-        var par = new List<Participant>()
-        {
-            new Participant() { CPRNumber = 2020200222 },
-            new Participant() { CPRNumber = 3004894242 }
-        };
-        if (p1 != null)
-        {
-            par.Add(p1);
-        }
+        
         Reservation r2 = new Reservation()
         {
             Start = new DateTime(2022, 4, 5, 10, 30, 00),
             End = new DateTime(2022, 4, 5, 12, 15, 00),
             User = u3,
-            Facility = f4,
-            Participants = par
+            Facility = f4
         };
-        _reservationController.Add(r1);
-        _reservationController.Add(r2);
+        _context.Reservations.Add(r1);
+        _context.Reservations.Add(r2);
+        _context.SaveChanges();
+        
+        long cpr =  1941491231;
+        long cpr2 = 2020200222;
+        long cpr3 = 3004894242;
+        var r = _context.Reservations.FirstOrDefault(res => res.Facility == r1.Facility);
+        _reservationController.AddParticipant((cpr), r.Id);
+        r = _context.Reservations.FirstOrDefault(res => res.Facility == r2.Facility);
+        _reservationController.AddParticipant((cpr), r.Id);
+        _reservationController.AddParticipant(cpr2, r.Id);
+        _reservationController.AddParticipant(cpr3, r.Id);
+        _context.SaveChanges();
         BusinessUser b1 = new BusinessUser()
         {
             CPRNumber = 1234567890,
@@ -281,6 +289,7 @@ public class CommandCtrl
             PhoneNumber = 12345678,
             BusinessCVR = 12345678,
             Name = "Jysk Sengetøjslager",
+            Reservations = new List<Reservation>()
         };
         BusinessUser b2 = new BusinessUser()
         {
@@ -300,9 +309,18 @@ public class CommandCtrl
             BusinessCVR = 12345678,
             Name = "Harald Nyborg",
         };
-        _userController.Add(b1);
-        _userController.Add(b2);
-        _userController.Add(b3);
+        try
+        {
+            _userController.Add(b1);
+            _userController.Add(b2);
+            _userController.Add(b3);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            Console.WriteLine("Data keys" + e.Data.Keys.GetType() + " val:" + e.Data.Values);
+        }
+
 
         MaintenanceIntervention m1 = new MaintenanceIntervention()
         {
@@ -322,7 +340,7 @@ public class CommandCtrl
             StartDate = new DateTime(2022, 1, 1),
             TechnicianName = "Dash Wild"
         };
-
+       
         _context.MaintenanceInterventions.Add(m1);
         _context.MaintenanceInterventions.Add(m2);
         _context.MaintenanceInterventions.Add(m3);

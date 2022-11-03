@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221103114210_Migration4_FixedParticipantsManyToMany")]
-    partial class Migration4_FixedParticipantsManyToMany
+    [Migration("20221103214619_Participants_take2")]
+    partial class Participants_take2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,12 +155,12 @@ namespace EFCore.Migrations
                     b.Property<long>("ParticipantsCPRNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ReservationId")
+                    b.Property<int>("ReservationsId")
                         .HasColumnType("int");
 
-                    b.HasKey("ParticipantsCPRNumber", "ReservationId");
+                    b.HasKey("ParticipantsCPRNumber", "ReservationsId");
 
-                    b.HasIndex("ReservationId");
+                    b.HasIndex("ReservationsId");
 
                     b.ToTable("ParticipantReservation");
                 });
@@ -215,7 +215,7 @@ namespace EFCore.Migrations
 
                     b.HasOne("EFCore.Model.Reservation", null)
                         .WithMany()
-                        .HasForeignKey("ReservationId")
+                        .HasForeignKey("ReservationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

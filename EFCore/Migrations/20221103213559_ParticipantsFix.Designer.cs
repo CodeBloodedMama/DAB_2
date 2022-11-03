@@ -4,6 +4,7 @@ using EFCore.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221103213559_ParticipantsFix")]
+    partial class ParticipantsFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,7 +86,12 @@ namespace EFCore.Migrations
                     b.Property<long>("CPRNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("ReservationId")
+                        .HasColumnType("int");
+
                     b.HasKey("CPRNumber");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("Participants");
                 });
@@ -148,21 +155,6 @@ namespace EFCore.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
-            modelBuilder.Entity("ParticipantReservation", b =>
-                {
-                    b.Property<long>("ParticipantsCPRNumber")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ReservationsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ParticipantsCPRNumber", "ReservationsId");
-
-                    b.HasIndex("ReservationsId");
-
-                    b.ToTable("ParticipantReservation");
-                });
-
             modelBuilder.Entity("EFCore.Model.BusinessUser", b =>
                 {
                     b.HasBaseType("EFCore.Model.User");
@@ -184,6 +176,13 @@ namespace EFCore.Migrations
                     b.Navigation("Facility");
                 });
 
+            modelBuilder.Entity("EFCore.Model.Participant", b =>
+                {
+                    b.HasOne("EFCore.Model.Reservation", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("ReservationId");
+                });
+
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
                 {
                     b.HasOne("EFCore.Model.Facility", "Facility")
@@ -203,26 +202,16 @@ namespace EFCore.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ParticipantReservation", b =>
-                {
-                    b.HasOne("EFCore.Model.Participant", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipantsCPRNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EFCore.Model.Reservation", null)
-                        .WithMany()
-                        .HasForeignKey("ReservationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("EFCore.Model.Facility", b =>
                 {
                     b.Navigation("MaintenanceHistory");
 
                     b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("EFCore.Model.Reservation", b =>
+                {
+                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("EFCore.Model.User", b =>

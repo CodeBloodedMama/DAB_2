@@ -1,5 +1,6 @@
 ﻿using EFCore.data;
 using EFCore.Model;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace EFCore.Controllers;
@@ -16,6 +17,20 @@ public class ReservationController : IController<Reservation>
     public Reservation Get(long id)
     {
         throw new NotImplementedException();
+    }
+
+    public void AddParticipant(long cpr, int ReservationId)
+    {
+        if (_context.Participants.FirstOrDefault(p => p.CPRNumber == cpr) == null)
+        {
+            var p = _context.Participants.Add(new Participant()
+                { CPRNumber = cpr });
+            _context.SaveChanges();
+        }
+
+        var toAdd = _context.Participants.FirstOrDefault(p => p.CPRNumber == cpr);
+        var r = _context.Reservations.Include(res => res.Participants).FirstOrDefault(r => r.Id == ReservationId);
+        r.Participants.Add(toAdd);
     }
 
     public List<Reservation> GetAll()
