@@ -310,8 +310,22 @@ public class CommandCtrl
             StartDate = new DateTime(2020, 4, 10),
             TechnicianName = "Thomas Wayne"
         };
+        MaintenanceIntervention m2 = new MaintenanceIntervention()
+        {
+            Facility = f2,
+            StartDate = new DateTime(2022, 7, 12),
+            TechnicianName = "Bob More"
+        };
+        MaintenanceIntervention m3 = new MaintenanceIntervention()
+        {
+            Facility = f4,
+            StartDate = new DateTime(2022, 1, 1),
+            TechnicianName = "Dash Wild"
+        };
 
         _context.MaintenanceInterventions.Add(m1);
+        _context.MaintenanceInterventions.Add(m2);
+        _context.MaintenanceInterventions.Add(m3);
         _context.SaveChanges();
     }
 
