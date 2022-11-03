@@ -230,7 +230,7 @@ public class CommandCtrl
             CPRNumber = 1234567890,
             Email = "Jysk@jysk.dk",
             PhoneNumber = 12345678,
-            CVR = 12345678,
+            BusinessCVR = 12345678,
             Name = "Jysk Sengetøjslager",
         };
         BusinessUser b2 = new BusinessUser()
@@ -238,7 +238,7 @@ public class CommandCtrl
             CPRNumber = 98765432,
             Email = "McD@mcd.dk",
             PhoneNumber = 12345678,
-            CVR = 12345678,
+            BusinessCVR = 12345678,
             Name = "MaCDonalds",
         };
 
@@ -247,9 +247,11 @@ public class CommandCtrl
             CPRNumber = 75645279,
             Email = "Harald Nyborg@hn.dk",
             PhoneNumber = 12345678,
-            CVR = 12345678,
+            BusinessCVR = 12345678,
             Name = "Harald Nyborg",
         };
+
+        
 
         
 
