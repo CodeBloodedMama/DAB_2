@@ -63,19 +63,35 @@ public class App
             {
                 throw new NotImplementedException();
             }
-            case "get f":
+            case "f":
+            case "facilities":
             {
                 OnGetFacilities();
                 break;
             }
-            case "get f ordered":
+            case "m":
+            case "maintenance":
+            {
+                OnGetMaintenanceHistory();
+                break;
+            }
+            case "f ordered":
+            case "facilities ordered":
             {
                 OnGetOrdered();
                 break;
             }
-            case "get reservations":
+            case "r":
+            case "reservations":
             {
                 OnGetReservations();
+                break;
+            }
+            case "r p":
+            case "reservations p":
+            case "reservations participants":
+            {
+                OnGetReservationsParticipants();
                 break;
             }
             case "reset database":
@@ -108,5 +124,14 @@ public class App
     {
         _commandCtrl.GetReservations();
     }
-    
+
+    private void OnGetReservationsParticipants()
+    {
+        _commandCtrl.GetReservationsWParticipants();
+    }
+
+    private void OnGetMaintenanceHistory()
+    {
+        _commandCtrl.GetMaintenanceHistory();
+    }
 }

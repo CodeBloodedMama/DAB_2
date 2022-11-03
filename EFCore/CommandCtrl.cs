@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using EFCore.Controllers;
 using EFCore.data;
 using EFCore.Model;
@@ -41,8 +42,8 @@ public class CommandCtrl
                 line += ' ';
             }
 
-            line += "Lat: " + f.GPS_lat;
-            line += "Lon: " + f.GPS_lon;
+            line += "Lat: " + String.Format("{0:0.000}", f.GPS_lat)  + "  ";
+            line += "Lon: " + String.Format("{0:0.000}", f.GPS_lon);
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -55,12 +56,13 @@ public class CommandCtrl
         {
             _context.Entry(r).Reference(res => res.Facility).Load();
             _context.Entry(r).Reference(res => res.User).Load();
-
+            _context.Entry(r).Collection(r => r.Participants)
+                .Load();
             string formatted = "";
     
             string line = "";
             line += "Fac Name: " + r.Facility.FacName;
-            while (line.Length < 20) {
+            while (line.Length < 30) {
                     line += ' ';
             } 
             line += "Username: " + r.User.Name;
@@ -70,10 +72,41 @@ public class CommandCtrl
             }
             line += "Time start: " + r.Start + " end: " + r.End;
             formatted += line + "\n";
+                        
+            _ui.Display(formatted); 
+        }
+    }
+
+    public void GetReservationsWParticipants()
+    {
+        List<Reservation> reservations = _context.Reservations.ToList();
+
+        foreach (var r in reservations)
+        {
+            _context.Entry(r).Reference(res => res.Facility).Load();
+            _context.Entry(r).Reference(res => res.User).Load();
+            _context.Entry(r).Collection(r => r.Participants)
+                .Load();
+            string formatted = "";
+
+            string line = "";
+            line += "Fac Name: " + r.Facility.FacName;
+            while (line.Length < 30)
+            {
+                line += ' ';
+            }
             
+            line += "Time start: " + r.Start + " end: " + r.End;
+            formatted += line + "\n";
+
+            _ui.Display(formatted);
+            formatted = "Participants: \n";
+            foreach (var p in r.Participants)
+            {
+                formatted += "CPR: " + p.CPRNumber + "\n";
+            }
             _ui.Display(formatted);
         }
-
     }
 
 
@@ -92,12 +125,12 @@ public class CommandCtrl
                 line += ' ';
             }
             line += "Name: " + f.FacName;
-            while (line.Length < 50)
+            while (line.Length < 64)
             { 
                 line += ' ';
             }
-            line += "Lat: " + f.GPS_lat;
-            line += "Lon: " + f.GPS_lon;
+            line += "Lat: " + String.Format("{0:0.000}", f.GPS_lat) + "  ";
+            line += "Lon: " + String.Format("{0:0.000}", f.GPS_lon);
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -280,5 +313,38 @@ public class CommandCtrl
 
         _context.MaintenanceInterventions.Add(m1);
         _context.SaveChanges();
+    }
+
+    public void GetMaintenanceHistory()
+    {
+        List<MaintenanceIntervention> maint =
+            _context.MaintenanceInterventions.Include(m => m.Facility)
+                .OrderBy(m => m.StartDate)
+                .ToList();
+
+        string formatted = "Id  Technician Name    Facility Name        Date\n";
+        foreach (var m in maint)
+        {
+            string line = String.Format("{0:0}",m.Id);
+            while (line.Length < "Id  ".Length)
+            {
+                line += ' ';
+            }
+            line += m.TechnicianName;
+            while (line.Length < "Id  Technician Name    ".Length)
+            {
+                line += ' ';
+            }
+
+            line += m.Facility.FacName;
+            while (line.Length < "Id  Technician Name     Facility Name       ".Length)
+            {
+                line += ' ';
+            }
+
+            line += m.StartDate;
+            formatted += line + "\n";
+        }
+        _ui.Display(formatted);
     }
 }
