@@ -251,9 +251,13 @@ public class CommandCtrl
             Name = "Harald Nyborg",
         };
 
-        
+        _userController.Add(b1);
+        _userController.Add(b2);
+        _userController.Add(b3);
 
-        
+
+
+
 
 
 
