@@ -49,7 +49,7 @@ namespace EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Facilities");
+                    b.ToTable("Facilities", (string)null);
                 });
 
             modelBuilder.Entity("EFCore.Model.MaintenanceIntervention", b =>
@@ -74,7 +74,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("MaintenanceIntervention");
+                    b.ToTable("MaintenanceIntervention", (string)null);
                 });
 
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
@@ -103,7 +103,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("UserCPRNumber");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("EFCore.Model.User", b =>
@@ -131,7 +131,7 @@ namespace EFCore.Migrations
 
                     b.HasKey("CPRNumber");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
