@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using EFCore.Controllers;
 using EFCore.data;
 using EFCore.Model;
@@ -27,16 +28,7 @@ public class CommandCtrl
             SeedDummyData();
         }
     }
-    public void UserEnterFacility()
-    {
-        Facility f = new Facility();
-        f.FacName = _ui.GetLine("Enter name:");
-        f.FacClosestAdr = _ui.GetLine("Enter address:");
-        _facilityController.Add(f);
-        _ui.Display("Command succesful\n");
-    }
-
-
+    
     public void GetAllFacilitiesWAddress()
     {
         var facilities = _context.Facilities.ToList();
@@ -50,7 +42,8 @@ public class CommandCtrl
                 line += ' ';
             }
 
-            line += "C. Address: " + f.FacClosestAdr;
+            line += "Lat: " + String.Format("{0:0.000}", f.GPS_lat)  + "  ";
+            line += "Lon: " + String.Format("{0:0.000}", f.GPS_lon);
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -63,12 +56,13 @@ public class CommandCtrl
         {
             _context.Entry(r).Reference(res => res.Facility).Load();
             _context.Entry(r).Reference(res => res.User).Load();
-
+            _context.Entry(r).Collection(r => r.Participants)
+                .Load();
             string formatted = "";
     
             string line = "";
             line += "Fac Name: " + r.Facility.FacName;
-            while (line.Length < 20) {
+            while (line.Length < 30) {
                     line += ' ';
             } 
             line += "Username: " + r.User.Name;
@@ -78,10 +72,41 @@ public class CommandCtrl
             }
             line += "Time start: " + r.Start + " end: " + r.End;
             formatted += line + "\n";
+                        
+            _ui.Display(formatted); 
+        }
+    }
+
+    public void GetReservationsWParticipants()
+    {
+        List<Reservation> reservations = _context.Reservations.ToList();
+
+        foreach (var r in reservations)
+        {
+            _context.Entry(r).Reference(res => res.Facility).Load();
+            _context.Entry(r).Reference(res => res.User).Load();
+            _context.Entry(r).Collection(r => r.Participants)
+                .Load();
+            string formatted = "";
+
+            string line = "";
+            line += "Fac Name: " + r.Facility.FacName;
+            while (line.Length < 30)
+            {
+                line += ' ';
+            }
             
+            line += "Time start: " + r.Start + " end: " + r.End;
+            formatted += line + "\n";
+
+            _ui.Display(formatted);
+            formatted = "Participants: \n";
+            foreach (var p in r.Participants)
+            {
+                formatted += "CPR: " + p.CPRNumber + "\n";
+            }
             _ui.Display(formatted);
         }
-
     }
 
 
@@ -100,11 +125,12 @@ public class CommandCtrl
                 line += ' ';
             }
             line += "Name: " + f.FacName;
-            while (line.Length < 50)
+            while (line.Length < 64)
             { 
                 line += ' ';
             }
-            line += "C. Address: " + f.FacClosestAdr;
+            line += "Lat: " + String.Format("{0:0.000}", f.GPS_lat) + "  ";
+            line += "Lon: " + String.Format("{0:0.000}", f.GPS_lon);
             formatted += line + "\n";
         }
         _ui.Display(formatted);
@@ -146,7 +172,8 @@ public class CommandCtrl
     {
         Facility f1 = new Facility()
         {
-            FacClosestAdr = "Hans Hansen Street 22",
+            GPS_lat = 20.01,
+            GPS_lon = 50.31,
             FacType = "Playground",
             FacItems = "Bench",
             FacName = "The fun playground",
@@ -155,7 +182,8 @@ public class CommandCtrl
 
         Facility f2 = new Facility()
         {
-            FacClosestAdr = "Jens Jensen Street 33",
+            GPS_lat = 50.01,
+            GPS_lon = 121.3123,
             FacType = "Shelter",
             FacItems = "Fire pit",
             FacName = "Shelter by Aarhus",
@@ -163,7 +191,8 @@ public class CommandCtrl
         };
         Facility f3 = new Facility()
         {
-            FacClosestAdr = "Main Street 44",
+            GPS_lat = 42.02,
+            GPS_lon = 55.451,
             FacType = "Playground",
             FacItems = "Toilets",
             FacName = "The playground at Main Street",
@@ -171,7 +200,8 @@ public class CommandCtrl
         };
         Facility f4 = new Facility()
         {
-            FacClosestAdr = "Jens Juuls Street 55",
+            GPS_lat = 68.0131,
+            GPS_lon = 13.2314,
             FacType = "Tennis court",
             FacItems = "Balls",
             FacName = "The land of tennis",
@@ -223,20 +253,24 @@ public class CommandCtrl
                 new Participant(){CPRNumber = 1941491231}
             }
         };
-        
 
+        var p1 = _context.Participants.Find((long)1941491231);
+        var par = new List<Participant>()
+        {
+            new Participant() { CPRNumber = 2020200222 },
+            new Participant() { CPRNumber = 3004894242 }
+        };
+        if (p1 != null)
+        {
+            par.Add(p1);
+        }
         Reservation r2 = new Reservation()
         {
             Start = new DateTime(2022, 4, 5, 10, 30, 00),
             End = new DateTime(2022, 4, 5, 12, 15, 00),
             User = u3,
             Facility = f4,
-            Participants = new List<Participant>()
-            {
-                new Participant(){CPRNumber = 1941491231},
-                new Participant(){CPRNumber = 2020200222},
-                new Participant(){CPRNumber = 3004894242}
-            }
+            Participants = par
         };
         _reservationController.Add(r1);
         _reservationController.Add(r2);
@@ -279,5 +313,38 @@ public class CommandCtrl
 
         _context.MaintenanceInterventions.Add(m1);
         _context.SaveChanges();
+    }
+
+    public void GetMaintenanceHistory()
+    {
+        List<MaintenanceIntervention> maint =
+            _context.MaintenanceInterventions.Include(m => m.Facility)
+                .OrderBy(m => m.StartDate)
+                .ToList();
+
+        string formatted = "Id  Technician Name    Facility Name        Date\n";
+        foreach (var m in maint)
+        {
+            string line = String.Format("{0:0}",m.Id);
+            while (line.Length < "Id  ".Length)
+            {
+                line += ' ';
+            }
+            line += m.TechnicianName;
+            while (line.Length < "Id  Technician Name    ".Length)
+            {
+                line += ' ';
+            }
+
+            line += m.Facility.FacName;
+            while (line.Length < "Id  Technician Name     Facility Name       ".Length)
+            {
+                line += ' ';
+            }
+
+            line += m.StartDate;
+            formatted += line + "\n";
+        }
+        _ui.Display(formatted);
     }
 }

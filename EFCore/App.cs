@@ -57,35 +57,41 @@ public class App
                 _running = false;
                 break;
             }
-            case "a":
-            case "add":
-            {
-                OnAdd();
-                break;
-            }
-            case "g":
-            case "get":
-            {
-                throw new NotImplementedException();
-            }
+           
             case "s":
             case "show":
             {
                 throw new NotImplementedException();
             }
-            case "get f":
+            case "f":
+            case "facilities":
             {
                 OnGetFacilities();
                 break;
             }
-            case "get f ordered":
+            case "m":
+            case "maintenance":
+            {
+                OnGetMaintenanceHistory();
+                break;
+            }
+            case "f ordered":
+            case "facilities ordered":
             {
                 OnGetOrdered();
                 break;
             }
-            case "get reservations":
+            case "r":
+            case "reservations":
             {
                 OnGetReservations();
+                break;
+            }
+            case "r p":
+            case "reservations p":
+            case "reservations participants":
+            {
+                OnGetReservationsParticipants();
                 break;
             }
             case "reset database":
@@ -108,25 +114,7 @@ public class App
     {
         _commandCtrl.GetFacilitiesOrderByKind();
     }
-
-    private void OnAdd()
-    {
-        string table = _ui.GetTable();
-        switch (table)
-        {
-            case "f":
-            case "Facility":
-            case "facility":
-            {
-                _commandCtrl.UserEnterFacility();
-                break;
-            }
-            default:
-                _ui.Display("No such table exists!\n");
-                break;
-        }
-    }
-
+    
     private void OnGetFacilities()
     {
         _commandCtrl.GetAllFacilitiesWAddress();
@@ -136,5 +124,14 @@ public class App
     {
         _commandCtrl.GetReservations();
     }
-    
+
+    private void OnGetReservationsParticipants()
+    {
+        _commandCtrl.GetReservationsWParticipants();
+    }
+
+    private void OnGetMaintenanceHistory()
+    {
+        _commandCtrl.GetMaintenanceHistory();
+    }
 }
