@@ -19,7 +19,7 @@ namespace EFCore.data
         public DbSet<User> Users { get; set; } = default!;
         public DbSet<BusinessUser> BusinessUsers { get; set; } = default!;
         public DbSet<MaintenanceIntervention> MaintenanceInterventions { get; set; } = default!;
-
+        public DbSet<Participant> Participants { get; set; } = default!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasDiscriminator<string>("Discriminator")

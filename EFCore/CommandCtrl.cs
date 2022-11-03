@@ -1,4 +1,5 @@
-﻿using EFCore.Controllers;
+﻿using System.Security.Cryptography;
+using EFCore.Controllers;
 using EFCore.data;
 using EFCore.Model;
 using EFCore.UI;
@@ -209,19 +210,33 @@ public class CommandCtrl
         _userController.Add(u2);
         _userController.Add(u3);
 
+        
+
         Reservation r1 = new Reservation()
         {
             Start = new DateTime(2022, 2, 7, 12, 00, 00),
             End = new DateTime(2022, 2, 7, 14, 00, 00),
             User = u1,
-            Facility = f1
+            Facility = f1,
+            Participants = new List<Participant>()
+            {
+                new Participant(){CPRNumber = 1941491231}
+            }
         };
+        
+
         Reservation r2 = new Reservation()
         {
             Start = new DateTime(2022, 4, 5, 10, 30, 00),
             End = new DateTime(2022, 4, 5, 12, 15, 00),
             User = u3,
-            Facility = f4
+            Facility = f4,
+            Participants = new List<Participant>()
+            {
+                new Participant(){CPRNumber = 1941491231},
+                new Participant(){CPRNumber = 2020200222},
+                new Participant(){CPRNumber = 3004894242}
+            }
         };
         _reservationController.Add(r1);
         _reservationController.Add(r2);
