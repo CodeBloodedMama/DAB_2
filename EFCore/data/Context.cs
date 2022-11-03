@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using EFCore.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace EFCore.data
@@ -14,12 +16,17 @@ namespace EFCore.data
         public DbSet<Facility> Facilities { get; set; } = default!;
         public DbSet<Reservation> Reservations { get; set; } = default!;
         public DbSet<User> Users { get; set; } = default!;
+        public DbSet<BusinessUser> BusinessUsers { get; set; } = default!;
 
-        private const string MarcinConnString =
-            "Data Source=127.0.0.1,1433;Database=FacilitiesDb;User Id=sa;Password=MyDumbPass1;TrustServerCertificate=True";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(MarcinConnString);
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.js", false);
+            IConfiguration config = builder.Build();
+            string connString = config.GetConnectionString("MyConnString");
+            optionsBuilder.UseSqlServer(connString);
+            
             //optionsBuilder.UseInMemoryDatabase("FacilityDatabase");
         }
 

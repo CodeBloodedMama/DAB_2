@@ -1,6 +1,6 @@
 ﻿using EFCore.data;
 using EFCore.Model;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCore.Controllers;
 

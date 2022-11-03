@@ -4,6 +4,7 @@ using EFCore.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221102171551_CPRNumber_SET_IDENTITY_ON")]
+    partial class CPRNumber_SET_IDENTITY_ON
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,31 +54,6 @@ namespace EFCore.Migrations
                     b.ToTable("Facilities");
                 });
 
-            modelBuilder.Entity("EFCore.Model.MaintenanceIntervention", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<int>("FacilityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TechnicianName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacilityId");
-
-                    b.ToTable("MaintenanceIntervention");
-                });
-
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
                 {
                     b.Property<int>("Id")
@@ -111,12 +88,8 @@ namespace EFCore.Migrations
                     b.Property<long>("CPRNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("CVR")
+                    b.Property<int>("CVR")
                         .HasColumnType("int");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -132,29 +105,6 @@ namespace EFCore.Migrations
                     b.HasKey("CPRNumber");
 
                     b.ToTable("Users");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("EFCore.Model.BusinessUser", b =>
-                {
-                    b.HasBaseType("EFCore.Model.User");
-
-                    b.Property<int>("BusinessCVR")
-                        .HasColumnType("int");
-
-                    b.HasDiscriminator().HasValue("BusinessUser");
-                });
-
-            modelBuilder.Entity("EFCore.Model.MaintenanceIntervention", b =>
-                {
-                    b.HasOne("EFCore.Model.Facility", "Facility")
-                        .WithMany("MaintenanceHistory")
-                        .HasForeignKey("FacilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Facility");
                 });
 
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
@@ -178,8 +128,6 @@ namespace EFCore.Migrations
 
             modelBuilder.Entity("EFCore.Model.Facility", b =>
                 {
-                    b.Navigation("MaintenanceHistory");
-
                     b.Navigation("Reservations");
                 });
 

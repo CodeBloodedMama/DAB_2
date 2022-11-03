@@ -4,6 +4,7 @@ using EFCore.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221103082456_AddBuisinessUser_UserCVROptional")]
+    partial class AddBuisinessUser_UserCVROptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,31 +52,6 @@ namespace EFCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Facilities");
-                });
-
-            modelBuilder.Entity("EFCore.Model.MaintenanceIntervention", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<int>("FacilityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TechnicianName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FacilityId");
-
-                    b.ToTable("MaintenanceIntervention");
                 });
 
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
@@ -146,17 +123,6 @@ namespace EFCore.Migrations
                     b.HasDiscriminator().HasValue("BusinessUser");
                 });
 
-            modelBuilder.Entity("EFCore.Model.MaintenanceIntervention", b =>
-                {
-                    b.HasOne("EFCore.Model.Facility", "Facility")
-                        .WithMany("MaintenanceHistory")
-                        .HasForeignKey("FacilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Facility");
-                });
-
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
                 {
                     b.HasOne("EFCore.Model.Facility", "Facility")
@@ -178,8 +144,6 @@ namespace EFCore.Migrations
 
             modelBuilder.Entity("EFCore.Model.Facility", b =>
                 {
-                    b.Navigation("MaintenanceHistory");
-
                     b.Navigation("Reservations");
                 });
 
