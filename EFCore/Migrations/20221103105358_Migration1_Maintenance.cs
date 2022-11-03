@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EFCore.Migrations
 {
-    public partial class Migration1_MaintenanceHistory : Migration
+    public partial class Migration1_Maintenance : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "MaintenanceIntervention",
+                name: "MaintenanceInterventions",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -21,9 +21,9 @@ namespace EFCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaintenanceIntervention", x => x.Id);
+                    table.PrimaryKey("PK_MaintenanceInterventions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MaintenanceIntervention_Facilities_FacilityId",
+                        name: "FK_MaintenanceInterventions_Facilities_FacilityId",
                         column: x => x.FacilityId,
                         principalTable: "Facilities",
                         principalColumn: "Id",
@@ -31,15 +31,15 @@ namespace EFCore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_MaintenanceIntervention_FacilityId",
-                table: "MaintenanceIntervention",
+                name: "IX_MaintenanceInterventions_FacilityId",
+                table: "MaintenanceInterventions",
                 column: "FacilityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "MaintenanceIntervention");
+                name: "MaintenanceInterventions");
         }
     }
 }

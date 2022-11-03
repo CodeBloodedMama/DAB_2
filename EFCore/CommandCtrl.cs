@@ -149,8 +149,9 @@ public class CommandCtrl
             FacType = "Playground",
             FacItems = "Bench",
             FacName = "The fun playground",
-            FacRules = "No fire"
+            FacRules = "No fire",
         };
+
         Facility f2 = new Facility()
         {
             FacClosestAdr = "Jens Jensen Street 33",
@@ -253,5 +254,15 @@ public class CommandCtrl
         _userController.Add(b1);
         _userController.Add(b2);
         _userController.Add(b3);
+
+        MaintenanceIntervention m1 = new MaintenanceIntervention()
+        {
+            Facility = f1,
+            StartDate = new DateTime(2020, 4, 10),
+            TechnicianName = "Thomas Wayne"
+        };
+
+        _context.MaintenanceInterventions.Add(m1);
+        _context.SaveChanges();
     }
 }

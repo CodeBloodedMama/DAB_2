@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCore.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221103084931_Migration1_MaintenanceHistory")]
-    partial class Migration1_MaintenanceHistory
+    [Migration("20221103105358_Migration1_Maintenance")]
+    partial class Migration1_Maintenance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,7 +76,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("FacilityId");
 
-                    b.ToTable("MaintenanceIntervention");
+                    b.ToTable("MaintenanceInterventions");
                 });
 
             modelBuilder.Entity("EFCore.Model.Reservation", b =>
