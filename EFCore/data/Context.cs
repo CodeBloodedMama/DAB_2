@@ -17,6 +17,12 @@ namespace EFCore.data
         public DbSet<Reservation> Reservations { get; set; } = default!;
         public DbSet<User> Users { get; set; } = default!;
         public DbSet<BusinessUser> BusinessUsers { get; set; } = default!;
+        public DbSet<Participant> Participants { get; set; } = default!;
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
